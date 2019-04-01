@@ -1,0 +1,42 @@
+---
+- name: Ansible role for installation of tomcat
+  hosts: backendservers
+  become: true
+  become_user: root
+  gather_facts: true
+  tasks:
+    - name: apt-get update
+      apt:
+        udpate_cache: true
+
+    - name: Install JDK
+      apt:
+        name: openjdk-8-jdk
+
+    - name: Add tomcat user group
+      group:
+        name: tomcat
+        state: present
+
+    - name: Add tomcat user
+      user:
+        name: tomcat
+        groups: tomcat
+        shell: /bin/false
+
+    - name: Download tomcat
+      get_url:
+        url: http://redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz
+        dest: /tmp/apache-tomcat-8.5.31.tar.gz
+        mode: o=rw
+
+    - name: Tomcat directory
+      file:
+        path: /opt/tomcat
+        state: directory
+        mode: 0755
+
+    - name: Extract tar file
+      unarchive:
+        src: /tmp/apache-tomcat-8.5.31.tar.gz
+        dest: /opt/tomcat
