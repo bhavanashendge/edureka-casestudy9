@@ -7,7 +7,7 @@
   tasks:
     - name: apt-get update
       apt:
-        udpate_cache: true
+        update_cache: true
 
     - name: Install JDK
       apt:
@@ -30,13 +30,11 @@
         dest: /tmp/apache-tomcat-8.5.31.tar.gz
         mode: o=rw
 
-    - name: Tomcat directory
+    - name: Create tomcat directory
       file:
         path: /opt/tomcat
         state: directory
         mode: 0755
 
     - name: Extract tar file
-      unarchive:
-        src: /tmp/apache-tomcat-8.5.31.tar.gz
-        dest: /opt/tomcat
+      command: /bin/tar xzvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
