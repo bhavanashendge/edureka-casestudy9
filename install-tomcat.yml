@@ -26,8 +26,8 @@
 
     - name: Download tomcat
       get_url:
-        url: http://redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz
-        dest: /tmp/apache-tomcat-8.5.31.tar.gz
+        url: http://mirrors.gigenet.com/apache/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
+        dest: /tmp/apache-tomcat-8.5.39.tar.gz
         mode: o=rw
 
     - name: Create tomcat directory
