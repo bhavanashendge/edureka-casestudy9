@@ -39,4 +39,5 @@
     - name: Extract tar file
       unarchive:
         src: /tmp/apache-tomcat-8.5.39.tar.gz
+        remote_src: yes
         dest: /opt/tomcat
