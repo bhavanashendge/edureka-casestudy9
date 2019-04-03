@@ -42,3 +42,10 @@
         src: /tmp/apache-tomcat-8.5.39.tar.gz
         remote_src: yes
         dest: /opt/tomcat
+
+    - name: Permission
+      file:
+       path: /opt/tomcat
+       owner: tomcat
+       group: tomcat
+       mode: 0777
