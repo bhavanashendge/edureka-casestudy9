@@ -1,4 +1,4 @@
-#module role for apache intall
+# Module role for apache intall
 ---
     - name: apt-get update
       apt:
@@ -21,8 +21,8 @@
 
     - name: Download tomcat
       get_url:
-        url: http://mirrors.gigenet.com/apache/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
-        dest: /tmp/apache-tomcat-8.5.39.tar.gz
+        url: http://mirrors.gigenet.com/apache/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
+        dest: /tmp/apache-tomcat-{{tomcat_version}}.tar.gz
         mode: o=rw
 
     - name: Create tomcat directory
@@ -33,7 +33,7 @@
 
     - name: Extract tar file
       unarchive:
-        src: /tmp/apache-tomcat-8.5.39.tar.gz
+        src: /tmp/apache-tomcat-{{tomcat_version}}.tar.gz
         remote_src: yes
         extra_opts: "--strip-components=1"
         dest: /opt/tomcat
