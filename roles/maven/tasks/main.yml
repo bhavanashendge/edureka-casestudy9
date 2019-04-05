@@ -7,11 +7,11 @@
     update_cache: true
 
  - name: download maven repository
-   command: chdir=/home/edureka/Downloads/ wget http://apache.mirror.digitalpacific.com.au/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
- 
+   command: chdir=/home/edureka/Downloads/ wget http://apache.mirror.digitalpacific.com.au/maven/maven-3/{{ apache-version }}/binaries/apache-maven-{{ apache-version }}-bin.tar.gz
+
  - name: extract maven tar
-   command: chdir=/opt /bin/tar -xzvf /home/edureka/Downloads/apache-maven-3.3.9-bin.tar.gz
+   command: chdir=/opt /bin/tar -xzvf /home/edureka/Downloads/apache-maven-{{ apache-version }}-bin.tar.gz
 
 
- - name: install maven 
-   command: update-alternatives --install /usr/bin/mvn maven /opt/apache-maven-3.3.9/bin/mvn 1001 
+ - name: install maven
+   command: update-alternatives --install /usr/bin/mvn maven /opt/apache-maven-{{ apache-version }}/bin/mvn 1001
