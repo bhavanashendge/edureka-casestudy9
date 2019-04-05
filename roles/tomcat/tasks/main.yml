@@ -1,0 +1,67 @@
+#module role for apache intall
+---
+    - name: apt-get update
+      apt:
+        update_cache: true
+
+    - name: Install JDK
+      apt:
+        name: openjdk-8-jdk
+
+    - name: Add tomcat user group
+      group:
+        name: tomcat
+        state: present
+
+    - name: Add tomcat user
+      user:
+        name: tomcat
+        groups: tomcat
+        shell: /bin/false
+
+    - name: Download tomcat
+      get_url:
+        url: http://mirrors.gigenet.com/apache/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.tar.gz
+        dest: /tmp/apache-tomcat-8.5.39.tar.gz
+        mode: o=rw
+
+    - name: Create tomcat directory
+      file:
+        path: /opt/tomcat
+        state: directory
+        mode: 0777
+
+    - name: Extract tar file
+      unarchive:
+        src: /tmp/apache-tomcat-8.5.39.tar.gz
+        remote_src: yes
+        extra_opts: "--strip-components=1"
+        dest: /opt/tomcat
+
+    - name: Set permission for /opt/tomcat folder
+      file:
+       path: /opt/tomcat
+       owner: tomcat
+       group: tomcat
+       recurse: true
+
+    - name: Set permission for /opt/tomcat/conf folder contents recursively
+      file:
+        path: /opt/tomcat/conf
+        mode: g+r
+        recurse: true
+
+    - name: Set permission for /opt/tomcat/conf folder itself
+      file:
+        path: /opt/tomcat/conf
+        mode: g+x
+
+    - name: Install Tomcat init script
+      copy: src=tomcat.service dest=/etc/systemd/system mode=0777
+
+    - name: systemctl daemon-reload
+      command: systemctl daemon-reload
+
+    - name: systemctl start tomcat
+      command: systemctl start tomcat
+
